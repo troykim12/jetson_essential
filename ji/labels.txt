@@ -1,0 +1,12 @@
+BACKGROUND
+Bird
+Dog
+Human
+Leopard Cat
+Racoon
+Siberian Chipmunk
+Squirrel
+Water Deer
+Weasel
+Wild Boar
+Wild Rabbit
