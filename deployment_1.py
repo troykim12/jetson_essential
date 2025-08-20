@@ -463,13 +463,17 @@ try:
 
         for tid in list(seen_since.keys()):
             if tid not in active_ids: del seen_since[tid]
-        
-        # === SCRIPT 1에서 병합된 클래스별 오디오 재생 로직 START ===
+         
+              # === SCRIPT 1에서 병합된 클래스별 오디오 재생 로직 START ===
         # Script 2의 단순 알람 로직을 대체합니다.
         classes_ready = set()
         for t in tracks:
             if t.id not in seen_since: continue
-            cname = id_to_label.get(int(t.class_id), str(t.class_id))
+            
+            # ▼▼▼▼▼▼▼▼▼▼▼ 이 부분이 수정되었습니다 ▼▼▼▼▼▼▼▼▼▼▼
+            cname = id_to_label[t.class_id] if 0 <= t.class_id < len(id_to_label) else str(t.class_id)
+            # ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
+            
             cname_norm_policy = normalize(cname) # 위험도 정책 조회용
             cname_norm_audio = sanitize_label(cname) # 오디오 파일 키 조회용
             
@@ -490,7 +494,7 @@ try:
                 audio_started = time.time()
                 audio_playing = True
                 last_audio_ts_class[chosen_label] = now
-
+        
         if audio_playing and (time.time() - audio_started) >= (audio_len_sec or 3.2):
             stop_audio()
             audio_playing = False
